@@ -22,7 +22,7 @@
       </div>
       <div class="search">
         <label for="pesquisar">Pesquise aqui:</label>
-        <input type="search" class="input-search" id="pesquisar" />
+        <input type="search" class="input-search" placeholder="nome ou id" id="pesquisar" />
       </div>
     </div>
   </div>
@@ -37,7 +37,7 @@
       <h5 class="card-title" *ngIf="selectedRoom === 'room2'">{{ reserva.cod_equip }}</h5>
       <p class="">Quem reservou: {{ reserva.cod_user }}</p>
       <p class="card-text">Descrição: {{ reserva.desc }}</p>
-      <a routerLink="./view-reserve" class="btn btn-primary">Visualizar</a>
+      <a [routerLink]="['./view-reserve', reserva.cod_reserva]" class="btn btn-primary">Visualizar</a>
     </div>
   </div>
 </div>
