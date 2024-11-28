@@ -42,7 +42,7 @@ export class ViewReserveComponent {
     );
 
 
-    /* this.reserveService.getReservasEquipamentos().subscribe(
+    this.reserveService.getReservasEquipamentos().subscribe(
       (data: reserva_equip[]) => {
         console.log(data);
         this.equip = data;
@@ -50,7 +50,7 @@ export class ViewReserveComponent {
       (error) => {
         console.error('Erro ao carregar reservas:', error);
       }
-    ); */
+    );
   }
 
   alterarReserva(){
@@ -60,7 +60,7 @@ export class ViewReserveComponent {
   habilitarEdicao(sala: reservas_salas2): void {
     this.canEdit = true;
     this.reservaOriginal = { ...sala }; // Cria uma cópia da reserva original para uso no cancelamento
-    
+
   }
 
   salvarEdicaoSala(sala: reservas_salas2): void {
