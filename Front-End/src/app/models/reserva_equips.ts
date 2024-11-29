@@ -7,4 +7,6 @@ export interface reserva_equip{
     date_entrega: Date;
     hora_reserva: string;
     hora_entrega: string;
+    cod_reserva?: number;
+    nome_equip?: string;
 }

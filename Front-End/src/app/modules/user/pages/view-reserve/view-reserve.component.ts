@@ -14,26 +14,43 @@ import { ReserveService } from 'src/app/services/reserve.service';
 })
 export class ViewReserveComponent {
   salas: reservas_salas2[] = [];
+  sala: reservas_salas2 | undefined;
   equip: reserva_equip[] = [];
+  equipamento: reserva_equip | undefined;
   selectedReserva: reserva_equip | null = null;
-  reservaId: string = '';
+  reservaId: number = -1;
   canEdit: boolean = false;
   reservaOriginal: reservas_salas2 | null = null;
 
   constructor(private reserveService: ReserveService, private activeroute: ActivatedRoute, private authservice: AuthService) {}
 
   ngOnInit(): void {
-    this.carregarReservas();
     this.activeroute.params.subscribe(params => {
-   this.reservaId = params['cod_reserva']
-    });
-  }
+      this.reservaId = Number(params['id'])
+  });
+    this.carregarReservas();
+}
+carregarReservaAtual(): void{
+  const todas_reservas = [...this.equip, ...this.salas]
+  const reserva_atual = todas_reservas.filter(reserva => this.reservaId === reserva.cod_reserva)[0]
 
-  carregarReservas(): void {
-     this.reserveService.getReservasSalas().subscribe(
+  const type: 'sala' | 'equip' = Object.hasOwn(reserva_atual, 'cod_equip') ? 'equip' : 'sala'
+  if (type === 'equip'){
+    this.equipamento = reserva_atual as reserva_equip
+    console.log(this.equipamento)
+  }
+  else{
+    this.sala = reserva_atual as reservas_salas2
+    console.log(this.sala)
+  }
+  console.log(this)
+}
+carregarReservas(): void {
+  
+  this.reserveService.getReservasSalas().subscribe(
       (data: reservas_salas2[]) => {
         this.salas = data;
-        console.log(data);
+        this.carregarReservaAtual();
       },
       (error) => {
         console.error('Erro ao carregar reservas:', error);
@@ -44,13 +61,17 @@ export class ViewReserveComponent {
 
     this.reserveService.getReservasEquipamentos().subscribe(
       (data: reserva_equip[]) => {
-        console.log(data);
         this.equip = data;
+        this.carregarReservaAtual();
+
       },
       (error) => {
         console.error('Erro ao carregar reservas:', error);
       }
     );
+    
+
+
   }
 
   alterarReserva(){

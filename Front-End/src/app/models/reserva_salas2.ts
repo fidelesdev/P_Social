@@ -10,4 +10,5 @@ export interface reservas_salas2 extends reservas_salas{
     date_entrega: string;
     hora_reserva: string;
     hora_entrega: string;
+    nome_sala?: string;
 }
